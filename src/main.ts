@@ -2,7 +2,7 @@ import { createApp } from 'vue';
 import ArcoVue from '@arco-design/web-vue';
 import ArcoVueIcon from '@arco-design/web-vue/es/icon';
 import globalComponents from '@/components';
-import { parseTime, formatTime } from '@/utils';
+import { parseTime, formatTime, hasPermission } from '@/utils';
 import { densityList } from '@/utils/consts';
 import router from './router';
 import store, { useAppStore } from './store';
@@ -33,5 +33,6 @@ app.config.globalProperties.$staticUrl = `${
 app.config.globalProperties.$parseTime = parseTime;
 app.config.globalProperties.$formatTime = formatTime;
 app.config.globalProperties.$densityList = densityList;
+app.config.globalProperties.$hasPermission = hasPermission;
 
 app.mount('#app');

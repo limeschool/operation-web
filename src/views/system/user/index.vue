@@ -477,7 +477,6 @@
   const isAddVisible = ref<boolean>(false);
   const submitFormRef = ref();
   const { loading, setLoading } = useLoading(true);
-  const { t } = useI18n();
   const renderData = ref<any[]>([]);
   const roles = ref<SelectOptionData[]>([]);
   const teams = ref<CascaderOption[]>([]);

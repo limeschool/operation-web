@@ -7,6 +7,7 @@ declare module '@vue/runtime-core' {
     $formatTime: any;
     $localeOptions: any;
     $densityList: any;
+    $hasPermission: any;
   }
 }
 

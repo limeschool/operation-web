@@ -57,7 +57,7 @@ async function appRouteAndPermission(
     }
 
     // 处理子菜单
-    if (item.children) {
+    if (item.children && !item.is_hidden) {
       appRouteAndPermission(
         route.children as RouteRecordNormalized[],
         item.children,

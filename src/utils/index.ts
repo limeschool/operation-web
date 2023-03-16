@@ -1,4 +1,9 @@
+import { useAppStore } from '@/store';
 import { toInteger } from 'lodash';
+
+export const hasPermission = (r: string) => {
+  return useAppStore().permissions.includes(r);
+};
 
 type TargetContext = '_self' | '_parent' | '_blank' | '_top';
 

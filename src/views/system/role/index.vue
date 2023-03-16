@@ -111,6 +111,16 @@
           {{ $formatTime(record.updated_at) }}
         </template>
 
+        <template v-if="$hasPermission('system:role:menu')" #menu="{ record }">
+          <a-tag
+            class="cursor-pointer"
+            color="arcoblue"
+            @click="handleAdd(record.id)"
+          >
+            <template #icon><icon-menu /></template> 菜单管理
+          </a-tag>
+        </template>
+
         <template #operations="{ record }">
           <a-space class="cursor-pointer">
             <a-tag
@@ -254,12 +264,12 @@
 
         <a-form-item
           v-if="submitForm.data_scope === 'CUSTOM'"
-          field="description"
-          label="角色描述"
+          field="team_ids"
+          label="选择部门"
           :rules="[
             {
               required: true,
-              message: '角色描述是必填项',
+              message: '请选择部门',
             },
           ]"
           :validate-trigger="['change', 'input']"
@@ -359,6 +369,10 @@
     {
       title: '操作人员',
       dataIndex: 'operator',
+    },
+    {
+      title: '菜单管理',
+      slotName: 'menu',
     },
     {
       title: '操作',

@@ -69,7 +69,13 @@
                   <icon-lock />
                 </template>
                 <template #append>
-                  <img width="100" height="40" :src="captchaData.base64" />
+                  <img
+                    v-if="captchaData.base64"
+                    width="100"
+                    height="40"
+                    :src="captchaData.base64"
+                    @click="fetchCaptcha()"
+                  />
                 </template>
               </a-input>
             </a-form-item>
@@ -106,7 +112,7 @@
 
 <script lang="ts" setup>
   import Footer from '@/components/footer/index.vue';
-  import { ref, reactive } from 'vue';
+  import { ref, reactive, onUnmounted } from 'vue';
   import { useRouter } from 'vue-router';
   import { Message } from '@arco-design/web-vue';
   import { ValidatedError } from '@arco-design/web-vue/es/form/interface';
@@ -115,11 +121,13 @@
   import useLoading from '@/hooks/loading';
   import { captcha } from '@/api/system/user';
 
+  const timeInter: any = ref(null);
   const router = useRouter();
   const errorMessage = ref('');
   const captchaData = ref({
     base64: '',
     id: '',
+    expire: 0,
   });
   const { loading, setLoading } = useLoading();
   const userStore = useUserStore();
@@ -128,6 +136,11 @@
     rememberPassword: true,
     username: '',
     password: '',
+  });
+
+  onUnmounted(() => {
+    clearInterval(timeInter.value);
+    timeInter.value = null;
   });
 
   const userInfo = reactive({
@@ -141,6 +154,16 @@
     const data = await captcha();
     captchaData.value = data.data;
     userInfo.captcha_id = captchaData.value.id;
+
+    clearInterval(timeInter.value);
+    // eslint-disable-next-line no-use-before-define
+    autoFetchCaptcha();
+  };
+
+  const autoFetchCaptcha = async () => {
+    timeInter.value = setInterval(() => {
+      fetchCaptcha();
+    }, captchaData.value.expire / 1000000);
   };
 
   fetchCaptcha();
@@ -173,6 +196,7 @@
         loginConfig.value.username = rememberPassword ? username : '';
         loginConfig.value.password = rememberPassword ? password : '';
       } catch (err) {
+        fetchCaptcha();
         errorMessage.value = (err as Error).message;
       } finally {
         setLoading(false);

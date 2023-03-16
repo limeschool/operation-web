@@ -13,7 +13,7 @@ export interface HttpResponse<T = unknown> {
 
 if (import.meta.env.VITE_API_BASE_URL) {
   axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL;
-  axios.defaults.withCredentials = true;
+  axios.defaults.withCredentials = false;
   axios.defaults.timeout = 10000;
 }
 

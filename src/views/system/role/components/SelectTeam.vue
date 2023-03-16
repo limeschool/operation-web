@@ -29,7 +29,7 @@
   const props = defineProps({
     keys: {
       type: Array,
-      default: () => {
+      default: (): number[] => {
         return [];
       },
     },
