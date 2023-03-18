@@ -1,0 +1,1 @@
+import{b as t}from"./index.16f36a6f.js";function s(e){return t.get("/api/system/roles",{params:e})}function r(e){return t.post("/api/system/role",e)}function a(e){return t.put("/api/system/role",e)}function n(e){return t.delete("/api/system/role",{data:e})}export{r as a,n as d,s as g,a as u};
