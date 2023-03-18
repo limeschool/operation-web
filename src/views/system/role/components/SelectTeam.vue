@@ -41,7 +41,7 @@
     },
   });
 
-  const checkedKeys = ref(props.keys);
+  const checkedKeys = ref<number[]>(props.keys);
   const visible = ref(false);
 
   const emit = defineEmits(['select']);

@@ -113,9 +113,10 @@
 
         <template v-if="$hasPermission('system:role:menu')" #menu="{ record }">
           <a-tag
+            v-if="record.keyword != 'superAdmin'"
             class="cursor-pointer"
             color="arcoblue"
-            @click="handleAdd(record.id)"
+            @click="handleUpdateMenu(record)"
           >
             <template #icon><icon-menu /></template> 菜单管理
           </a-tag>
@@ -304,6 +305,26 @@
         </a-form-item>
       </a-form>
     </a-drawer>
+
+    <a-modal
+      v-model:visible="menuModalVisible"
+      title="设置角色菜单权限"
+      width="380px"
+      @cancel="menuModalVisible = false"
+      @before-ok="handleSubmitMenu"
+    >
+      <a-tree
+        v-model:checked-keys="roleMenuIds"
+        v-model:half-checked-keys="halfRoleMenuIds"
+        :checkable="true"
+        :data="roleMenus"
+        :only-check-leaf="true"
+        :field-names="{
+          key: 'id',
+          icon: 'icon_',
+        }"
+      />
+    </a-modal>
   </div>
 </template>
 
@@ -312,7 +333,15 @@
   import useLoading from '@/hooks/loading';
   import { Message, Modal } from '@arco-design/web-vue';
   import { deepClone } from '@/utils';
-  import { getRoles, addRole, updateRole, deleteRole } from '@/api/system/role';
+  import {
+    getRoles,
+    addRole,
+    updateRole,
+    deleteRole,
+    getRoleMenu,
+    updateRoleMenu,
+    getRoleMenuids,
+  } from '@/api/system/role';
   import { Pagination } from '@/types/global';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
@@ -323,16 +352,22 @@
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
 
+  const menuModalVisible = ref<boolean>(false);
   const modalVisible = ref<boolean>(false);
   const isAddVisible = ref<boolean>(false);
   const submitFormRef = ref();
   const { loading, setLoading } = useLoading(true);
   const renderData = ref<any[]>([]);
+
+  const roleMenus = ref<any[]>([]);
+  const roleMenuIds = ref([]);
+  const halfRoleMenuIds = ref([]);
   const teams = ref<any[]>([]);
   const submitForm = ref<any>({});
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
   const size = ref<SizeProps>('medium');
+  const curRoleId = ref();
   const basePagination: Pagination = {
     current: 1,
     pageSize: 20,
@@ -400,6 +435,26 @@
 
   fetchData();
   fetchTeams();
+
+  const handleSubmitMenu = async () => {
+    let ids = roleMenuIds.value;
+    ids = ids.concat(halfRoleMenuIds.value);
+    await updateRoleMenu({ role_id: curRoleId.value, menu_ids: ids });
+    Message.success('设置角色菜单成功');
+    menuModalVisible.value = false;
+    return true;
+  };
+
+  const handleUpdateMenu = async (item: any) => {
+    curRoleId.value = item.id;
+    const { data } = await getRoleMenu({ role_id: item.parent_id });
+    roleMenus.value = [data];
+
+    const idsInfo = await getRoleMenuids({ role_id: item.id });
+    roleMenuIds.value = idsInfo.data;
+    halfRoleMenuIds.value = [];
+    menuModalVisible.value = true;
+  };
 
   const handleSelectDensity = (
     val: string | number | Record<string, any> | undefined,
