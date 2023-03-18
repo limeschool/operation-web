@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref } from 'vue';
+  import { ref, onMounted } from 'vue';
 
   const props = defineProps({
     keys: {
@@ -41,13 +41,17 @@
     },
   });
 
-  const checkedKeys = ref<number[]>(props.keys);
+  const checkedKeys = ref<number[]>([]);
   const visible = ref(false);
 
   const emit = defineEmits(['select']);
   const handleOk = () => {
     emit('select', checkedKeys);
   };
+
+  onMounted(() => {
+    checkedKeys.value = props.keys as number[];
+  });
 </script>
 
 <style lang="less" scoped>
