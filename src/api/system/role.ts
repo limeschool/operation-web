@@ -19,4 +19,17 @@ export function updateRole(data: any) {
 export function deleteRole(data: any) {
   return axios.delete('/api/system/role', { data });
 }
+
+export function getRoleMenu(params: any) {
+  return axios.get('/api/system/role/menu', { params });
+}
+
+export function updateRoleMenu(data: any) {
+  return axios.put('/api/system/role/menu', data);
+}
+
+export function getRoleMenuids(params: any) {
+  return axios.get('/api/system/role/menu/ids', { params });
+}
+
 export default null;

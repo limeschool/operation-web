@@ -127,7 +127,7 @@
   const captchaData = ref({
     base64: '',
     id: '',
-    expire: 0,
+    expire: 30,
   });
   const { loading, setLoading } = useLoading();
   const userStore = useUserStore();
@@ -163,7 +163,7 @@
   const autoFetchCaptcha = async () => {
     timeInter.value = setInterval(() => {
       fetchCaptcha();
-    }, captchaData.value.expire / 1000000);
+    }, captchaData.value.expire * 1000);
   };
 
   fetchCaptcha();
