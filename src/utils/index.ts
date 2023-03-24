@@ -1,3 +1,5 @@
+import { INotice } from '@/types/global';
+import { Notification } from '@arco-design/web-vue';
 import { toInteger } from 'lodash';
 
 type TargetContext = '_self' | '_parent' | '_blank' | '_top';
@@ -129,5 +131,15 @@ export function readFile(file: any) {
 export function deepClone(data: any) {
   return JSON.parse(JSON.stringify(data));
 }
+
+// 通知封装，方便简单调用
+export const notice = ({
+  type = 'success',
+  content,
+  duration = 3000,
+  ...props
+}: INotice): void => {
+  Notification[type]({ content, duration, ...props });
+};
 
 export default null;

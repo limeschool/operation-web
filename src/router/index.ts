@@ -5,6 +5,7 @@ import 'nprogress/nprogress.css';
 // import { appRoutes } from './routes';
 // import { REDIRECT_MAIN, NOT_FOUND_ROUTE } from './routes/base';
 import createRouteGuard from './guard';
+import { DEFAULT_LAYOUT } from './routes/base';
 
 NProgress.configure({ showSpinner: false }); // NProgress Configuration
 
@@ -22,6 +23,28 @@ const router = createRouter({
       meta: {
         requiresAuth: false,
       },
+    },
+    {
+      path: '/me',
+      name: 'me',
+      component: DEFAULT_LAYOUT,
+      meta: {
+        title: '个人中心',
+        keepAlive: false,
+        requiresAuth: true,
+      },
+      children: [
+        {
+          path: 'userinfo',
+          name: 'UserInfo',
+          component: () => import('@/views/me/user-info/index.vue'),
+          meta: {
+            locale: 'menu.system.userinfo',
+            requiresAuth: true,
+            roles: ['*'],
+          },
+        },
+      ],
     },
     // ...appRoutes,
     // REDIRECT_MAIN,

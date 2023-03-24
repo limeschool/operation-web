@@ -35,7 +35,7 @@ export function getUsers(params?: any) {
 }
 
 export function getUser() {
-  return axios.post('/api/system/user/info');
+  return axios.get('/api/system/user');
 }
 
 export function addUser(data: any) {
@@ -49,4 +49,20 @@ export function updateUser(data: any) {
 export function deleteUser(data: any) {
   return axios.delete('/api/system/user', { data });
 }
+
+// 修改用户信息
+export function updateUserInfo(data: any) {
+  return axios.put('/api/system/user/info', data);
+}
+
+// 修改用户密码
+export function updateUserPassword(data: any) {
+  return axios.put('/api/system/user/password', data);
+}
+
+// 获取邮箱验证码
+export function getEmailCaptcha() {
+  return axios.post('/api/system/email/captcha');
+}
+
 export default null;

@@ -13,7 +13,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
 }
-
+.pointer{
+  cursor:pointer;
+}
+.none, [hidden], [none]{
+  display:none !important;
+}
 .echarts-tooltip-diy {
   background: linear-gradient(
     304.17deg,
@@ -89,6 +94,24 @@ body {
     background-color: rgb(var(--blue-6));
     &.pass {
       background-color: rgb(var(--green-6));
+    }
+  }
+}
+.arco-notification-content{
+  line-height: 23px;
+}
+// 单张图片上传
+.app-single-upload{
+  .arco-upload-wrapper{
+    display:inline-block;
+    .arco-upload-list{
+      display:inline-block;
+    }
+    .arco-upload-picture-card{
+      border-radius:50%;
+    }
+    .arco-upload-list-picture{
+      border-radius:50%;
     }
   }
 }

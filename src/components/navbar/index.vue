@@ -148,12 +148,11 @@
             :style="{ marginRight: '8px', cursor: 'pointer' }"
           >
             <img v-if="avatar == 'logo.png'" alt="avatar" :src="logo" />
-            <img v-else alt="avatar" :src="$staticUrl + avatar" />
+            <img v-else alt="avatar" :src="avatar" />
           </a-avatar>
           <template #content>
             <a-doption>
-              <!-- @click="$router.push({ name: 'Info' })" -->
-              <a-space>
+              <a-space @click="$router.push({ name: 'UserInfo' })">
                 <icon-user />
                 <span>
                   {{ $t('menu.user') }}

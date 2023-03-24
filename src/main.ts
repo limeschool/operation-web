@@ -8,7 +8,7 @@ import router from './router';
 import store, { useAppStore } from './store';
 import i18n from './locale';
 import directive from './directive';
-import './mock';
+// import './mock';
 import App from './App.vue';
 import '@arco-design/web-vue/dist/arco.css';
 import '@/assets/style/global.less';

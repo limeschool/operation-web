@@ -3,6 +3,7 @@ import {
   login as userLogin,
   logout as userLogout,
   getUser,
+  updateUserInfo,
 } from '@/api/system/user';
 import { setToken, clearToken } from '@/utils/auth';
 import { removeRouteListener } from '@/utils/route-listener';
@@ -57,6 +58,11 @@ const useUserStore = defineStore('user', {
 
       this.setInfo(res.data);
     },
+
+    // async updateUserInfo(data: any) {
+    //   debugger;
+    //   await updateUserInfo(data);
+    // },
 
     // Login
     async login(loginForm: any) {

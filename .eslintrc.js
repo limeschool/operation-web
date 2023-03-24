@@ -36,7 +36,8 @@ module.exports = {
     },
   },
   rules: {
-    'prettier/prettier': 1,
+    'prettier/prettier': ['error', { endOfLine: 'auto' }],
+    // 'prettier/prettier': 1,
     // Vue: Recommended rules to be closed or modify
     'vue/require-default-prop': 0,
     'vue/singleline-html-element-content-newline': 0,
@@ -66,5 +67,7 @@ module.exports = {
     'no-param-reassign': 0,
     'prefer-regex-literals': 0,
     'import/no-extraneous-dependencies': 0,
+    'no-console': 'off',
+    'prefer-promise-reject-errors': 0,
   },
 };
