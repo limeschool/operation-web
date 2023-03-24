@@ -35,3 +35,11 @@ export interface GeneralChart {
   xAxis: string[];
   data: Array<{ name: string; value: number[] }>;
 }
+
+// 通知类型
+export interface INotice {
+  type?: 'success' | 'warning' | 'error' | 'info';
+  content: string;
+  duration?: number;
+  [key: string]: any;
+}
